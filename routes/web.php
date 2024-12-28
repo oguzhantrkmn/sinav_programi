@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SelectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +15,14 @@ use App\Http\Controllers\AuthController;
 |
 */
 
+// Ana sayfa yönlendirmesi
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
+// Giriş işlemleri
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+
+// Görev ve birim seçimi
+Route::get('/selection', [SelectionController::class, 'show'])->name('selection');

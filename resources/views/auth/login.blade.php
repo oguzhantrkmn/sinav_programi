@@ -135,6 +135,59 @@
             font-size: 0.9rem;
         }
 
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 3;
+        }
+
+        .modal-content {
+            background: linear-gradient(to right, #43cea2, #185a9d);
+            color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .modal-content h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .modal-content select,
+        .modal-content button {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .modal-content button {
+            background-color: #185a9d;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-content button:hover {
+            background-color: #43cea2;
+        }
+
         /* Animations */
         @keyframes fadeIn {
             from {
@@ -146,17 +199,6 @@
                 transform: translateY(0);
             }
         }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(100%);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
     </style>
 </head>
 <body>
@@ -164,14 +206,13 @@
     <div class="container">
         <!-- Left Brand Section -->
         <div class="brand-section">
-            <!-- <img src="{{ asset('images/logo.png') }}" alt="Logo"> -->
             <h1>Zeymus Akademi</h1>
             <p>Geleceğe Teknolojiyle Hazırlanın</p>
         </div>
         <!-- Right Login Box -->
         <div class="login-box">
             <h2>Sınav Takip Programı</h2>
-            <form action="{{ route('login') }}" method="POST">
+            <form onsubmit="openModal(event)">
                 @csrf
                 <div class="form-group">
                     <span class="form-icon">📧</span>
@@ -188,5 +229,58 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Popup -->
+    <div class="modal" id="roleModal">
+        <div class="modal-content">
+            <h3>Görev ve Biriminizi Seçiniz</h3>
+            <form>
+                <label for="unit">Birim Seçiniz</label>
+                <select id="unit">
+                    <option value="">Seçiniz</option>
+                    <option value="fef">Fen Edebiyat Fakültesi</option>
+                    <option value="mf">Mühendislik Fakültesi</option>
+                    <option value="iibf">İktisadi ve İdari Bilimler Fakültesi</option>
+                    <option value="tf">Tıp Fakültesi</option>
+                    <option value="hf">Hukuk Fakültesi</option>
+                    <option value="egf">Eğitim Fakültesi</option>
+                    <option value="sf">Sağlık Bilimleri Fakültesi</option>
+                    <option value="dmyo">Denizcilik Meslek Yüksekokulu</option>
+                    <option value="mtyo">Meslek Yüksekokulu</option>
+                    <option value="gsf">Güzel Sanatlar Fakültesi</option>
+                    <option value="zf">Ziraat Fakültesi</option>
+                    <option value="df">Diş Hekimliği Fakültesi</option>
+                </select>
+                <label for="role">Görevinizi Seçiniz</label>
+                <select id="role">
+                    <option value="">Seçiniz</option>
+                    <option value="akademisyen">Akademisyen</option>
+                    <option value="ogretim_uyesi">Öğretim Üyesi</option>
+                    <option value="ogretim_gorevlisi">Öğretim Görevlisi</option>
+                    <option value="idari_personel">İdari Personel</option>
+                    <option value="arastirma_gorevlisi">Araştırma Görevlisi</option>
+                    <option value="profesor">Profesör</option>
+                    <option value="docent">Doçent</option>
+                    <option value="yardimci_docent">Yardımcı Doçent</option>
+                    <option value="okutman">Okutman</option>
+                    <option value="laborant">Laborant</option>
+                    <option value="idari_amir">İdari Amir</option>
+                    <option value="sekreter">Sekreter</option>
+                </select>
+                <button type="button" onclick="redirectToHome()">Tamam</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openModal(event) {
+            event.preventDefault();
+            document.getElementById('roleModal').style.display = 'flex';
+        }
+
+        function redirectToHome() {
+            window.location.href = '/dashboard'; // Ana sayfa URL'nizi buraya yazın
+        }
+    </script>
 </body>
 </html>
