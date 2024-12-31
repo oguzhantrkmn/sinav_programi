@@ -3,26 +3,44 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Unit;
-use App\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 class UnitAndRoleSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void 
-     */
     public function run()
     {
-        // Unit verileri
-        Unit::create(['name' => 'İnsan Kaynakları']);
-        Unit::create(['name' => 'Muhasebe']);
-        Unit::create(['name' => 'Satış']);
+        // Birimler
+        $units = [
+            'Fen Edebiyat Fakültesi',
+            'Mühendislik Fakültesi',
+            'İktisadi ve İdari Bilimler Fakültesi',
+            'Tıp Fakültesi',
+            'Hukuk Fakültesi',
+            'Eğitim Fakültesi',
+            'Sağlık Bilimleri Fakültesi',
+            'Denizcilik Meslek Yüksekokulu',
+            'Meslek Yüksekokulu',
+            'Güzel Sanatlar Fakültesi',
+            'Ziraat Fakültesi',
+            'Diş Hekimliği Fakültesi',
+        ];
 
-        // Role verileri
-        Role::create(['name' => 'Yönetici']);
-        Role::create(['name' => 'Uzman']);
-        Role::create(['name' => 'Personel']);
+        foreach ($units as $unit) {
+            DB::table('units')->updateOrInsert(
+                ['name' => $unit],
+                ['created_at' => now(), 'updated_at' => now()]
+            );
+        }
+
+        // Görevler
+        $roles = ['Öğrenci', 'Akademisyen', 'Personel', 'İdari Çalışan'];
+        foreach ($roles as $role) {
+            DB::table('roles')->updateOrInsert(
+                ['name' => $role],
+                ['created_at' => now(), 'updated_at' => now()]
+            );
+        }
     }
 }
+
+

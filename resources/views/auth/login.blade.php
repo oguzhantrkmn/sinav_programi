@@ -212,7 +212,7 @@
         <!-- Right Login Box -->
         <div class="login-box">
             <h2>Sınav Takip Programı</h2>
-            <form onsubmit="openModal(event)">
+            <form action="{{ route('login.check') }}" method="POST">
                 @csrf
                 <div class="form-group">
                     <span class="form-icon">📧</span>
@@ -224,62 +224,71 @@
                 </div>
                 <button type="submit" class="btn">Sisteme Giriş</button>
             </form>
-            <div class="footer">
-                <p>&copy; 2024 Zeymus Teknoloji. Tüm hakları saklıdır.</p>
+
+            <!-- Hata Mesajlarını Göster -->
+            @if($errors->any())
+                <div style="color: red; margin-top: 10px;">
+                    @foreach($errors->all() as $error)
+                        {{ $error }}
+                    @endforeach
+                </div>
+            @endif
+        </div>
+    </div>
+
+    @if(session('showModal'))
+        <!-- Modal Popup -->
+        <div class="modal" id="roleModal" style="display: flex;">
+            <div class="modal-content">
+                <h3>Görev ve Biriminizi Seçiniz</h3>
+                <form>
+                    <label for="unit">Birim Seçiniz</label>
+                    <select id="unit">
+                        <option value="">Seçiniz</option>
+                        <option value="fef">Fen Edebiyat Fakültesi</option>
+                        <option value="mf">Mühendislik Fakültesi</option>
+                        <option value="iibf">İktisadi ve İdari Bilimler Fakültesi</option>
+                        <option value="tf">Tıp Fakültesi</option>
+                        <option value="hf">Hukuk Fakültesi</option>
+                        <option value="egf">Eğitim Fakültesi</option>
+                        <option value="sf">Sağlık Bilimleri Fakültesi</option>
+                        <option value="dmyo">Denizcilik Meslek Yüksekokulu</option>
+                        <option value="mtyo">Meslek Yüksekokulu</option>
+                        <option value="gsf">Güzel Sanatlar Fakültesi</option>
+                        <option value="zf">Ziraat Fakültesi</option>
+                        <option value="df">Diş Hekimliği Fakültesi</option>
+                    </select>
+                    <label for="role">Görevinizi Seçiniz</label>
+                    <select id="role">
+                        <option value="">Seçiniz</option>
+                        <option value="akademisyen">Akademisyen</option>
+                        <option value="ogretim_uyesi">Öğretim Üyesi</option>
+                        <option value="ogretim_gorevlisi">Öğretim Görevlisi</option>
+                        <option value="idari_personel">İdari Personel</option>
+                        <option value="arastirma_gorevlisi">Araştırma Görevlisi</option>
+                        <option value="profesor">Profesör</option>
+                        <option value="docent">Doçent</option>
+                        <option value="yardimci_docent">Yardımcı Doçent</option>
+                        <option value="okutman">Okutman</option>
+                        <option value="laborant">Laborant</option>
+                        <option value="idari_amir">İdari Amir</option>
+                        <option value="sekreter">Sekreter</option>
+                    </select>
+                    <button type="button" onclick="redirectToHome()">Tamam</button>
+                </form>
             </div>
         </div>
-    </div>
-
-    <!-- Modal Popup -->
-    <div class="modal" id="roleModal">
-        <div class="modal-content">
-            <h3>Görev ve Biriminizi Seçiniz</h3>
-            <form>
-                <label for="unit">Birim Seçiniz</label>
-                <select id="unit">
-                    <option value="">Seçiniz</option>
-                    <option value="fef">Fen Edebiyat Fakültesi</option>
-                    <option value="mf">Mühendislik Fakültesi</option>
-                    <option value="iibf">İktisadi ve İdari Bilimler Fakültesi</option>
-                    <option value="tf">Tıp Fakültesi</option>
-                    <option value="hf">Hukuk Fakültesi</option>
-                    <option value="egf">Eğitim Fakültesi</option>
-                    <option value="sf">Sağlık Bilimleri Fakültesi</option>
-                    <option value="dmyo">Denizcilik Meslek Yüksekokulu</option>
-                    <option value="mtyo">Meslek Yüksekokulu</option>
-                    <option value="gsf">Güzel Sanatlar Fakültesi</option>
-                    <option value="zf">Ziraat Fakültesi</option>
-                    <option value="df">Diş Hekimliği Fakültesi</option>
-                </select>
-                <label for="role">Görevinizi Seçiniz</label>
-                <select id="role">
-                    <option value="">Seçiniz</option>
-                    <option value="akademisyen">Akademisyen</option>
-                    <option value="ogretim_uyesi">Öğretim Üyesi</option>
-                    <option value="ogretim_gorevlisi">Öğretim Görevlisi</option>
-                    <option value="idari_personel">İdari Personel</option>
-                    <option value="arastirma_gorevlisi">Araştırma Görevlisi</option>
-                    <option value="profesor">Profesör</option>
-                    <option value="docent">Doçent</option>
-                    <option value="yardimci_docent">Yardımcı Doçent</option>
-                    <option value="okutman">Okutman</option>
-                    <option value="laborant">Laborant</option>
-                    <option value="idari_amir">İdari Amir</option>
-                    <option value="sekreter">Sekreter</option>
-                </select>
-                <button type="button" onclick="redirectToHome()">Tamam</button>
-            </form>
-        </div>
-    </div>
+    @endif
 
     <script>
-        function openModal(event) {
-            event.preventDefault();
-            document.getElementById('roleModal').style.display = 'flex';
-        }
+        document.addEventListener('DOMContentLoaded', function () {
+            @if(session('showModal'))
+                document.getElementById('roleModal').style.display = 'flex';
+            @endif
+        });
 
         function redirectToHome() {
-            window.location.href = '/dashboard'; // Ana sayfa URL'nizi buraya yazın
+            window.location.href = '/homepage'; // Ana sayfa URL'nizi buraya yazın
         }
     </script>
 </body>
