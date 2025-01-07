@@ -206,7 +206,7 @@
     <div class="container">
         <!-- Left Brand Section -->
         <div class="brand-section">
-            <h1>Zeymus Akademi</h1>
+            <img src="{{ asset('images/logo.png') }}" alt="Zeymus Akademi Logo">
             <p>Geleceğe Teknolojiyle Hazırlanın</p>
         </div>
         <!-- Right Login Box -->

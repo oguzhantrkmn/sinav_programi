@@ -23,6 +23,15 @@
         .navbar .navbar-brand {
             color: #fff;
             font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand img {
+            height: 50px;
+            width: auto;
+            margin-right: 10px;
+            display: inline-block;
         }
 
         .navbar-nav .nav-link {
@@ -64,7 +73,9 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Meybuz</a>
+            <a class="navbar-brand" href="#">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo">              
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -85,18 +96,9 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="personnelDropdown">
                             <li><a class="dropdown-item" href="#">Kullanıcı Listesi</a></li>
-                            <li><a class="dropdown-item" href="#">Kullanıcı Ekle</a></li>
+                            <li><a class="dropdown-item" href="/personel/ekle">Kullanıcı Ekle</a></li>
                             <li><a class="dropdown-item" href="#">Görev Listesi</a></li>
                         </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Tanımlamalar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Öğretim Elemanı Uygun Zaman</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Birim Sınav Çizelgesi</a>
                     </li>
                 </ul>
             </div>
